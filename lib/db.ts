@@ -68,16 +68,31 @@ export const repo = {
     return memory.invites.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
   },
 
-  async createInvite(data: Invite) {
-    if (isDbEnabled && prisma) {
-      const { startAt, endAt, guestFields, ...rest } = data as any
-      return prisma.invite.create({ data: {
+async createInvite(data: any) {
+  if (isDbEnabled && prisma) {
+    const { startAt, endAt, guestFields, ...rest } = data as any
+    return prisma.invite.create({
+      data: {
         ...rest,
         startAt: new Date(startAt),
         endAt: endAt ? new Date(endAt) : undefined,
         guestFields: guestFields ? (guestFields as any) : undefined,
-      }})
-    }
+      },
+    })
+  }
+
+  // Strip potentially duplicated keys coming from the API
+  const { id: _id, createdAt: _c, updatedAt: _u, ...safe } = data || {}
+  const inv = {
+    id: cuid(),
+    createdAt: nowISO(),
+    updatedAt: nowISO(),
+    ...safe,
+  } as Invite
+  memory.invites.push(inv as any)
+  return inv
+},
+
     const inv = { id: cuid(), createdAt: nowISO(), updatedAt: nowISO(), ...data }
     memory.invites.push(inv as any)
     return inv
