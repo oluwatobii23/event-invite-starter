@@ -18,7 +18,7 @@
     /* 👇 these two lines are the important part */
     "baseUrl": ".",
     "paths": {
-      "@/": ["./"]
+      "@/*": ["./*"]
     }
   },
   "include": ["next-env.d.ts", "*/.ts", "*/.tsx", ".next/types/*/.ts"],
