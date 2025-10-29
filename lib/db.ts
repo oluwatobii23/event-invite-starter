@@ -81,18 +81,19 @@ async createInvite(data: any) {
     })
   }
 
-  // Strip potentially duplicated keys coming from the API
+  // Strip any conflicting keys that might be passed in
   const { id: _id, createdAt: _c, updatedAt: _u, ...safe } = data || {}
+
   const inv = {
     id: cuid(),
     createdAt: nowISO(),
     updatedAt: nowISO(),
     ...safe,
   } as Invite
+
   memory.invites.push(inv as any)
   return inv
 },
-
     const inv = { id: cuid(), createdAt: nowISO(), updatedAt: nowISO(), ...data }
     memory.invites.push(inv as any)
     return inv
