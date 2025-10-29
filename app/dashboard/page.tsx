@@ -30,8 +30,13 @@ export default async function DashboardPage() {
   )
 }
 
+import { revalidatePath } from 'next/cache'
+import { repo } from '@/lib/db'
+import { toSlug } from '@/lib/utils'
+
 async function createInvite(formData: FormData) {
-  "use server"
+  'use server'
+
   const title = String(formData.get('title') || 'New Invite')
   const startAt = String(formData.get('startAt') || new Date().toISOString())
   const venue = String(formData.get('venue') || '')
@@ -44,14 +49,23 @@ async function createInvite(formData: FormData) {
   const theme = String(formData.get('theme') || '')
   const guestFields = (formData.getAll('guestFields') as string[]) || []
 
-  const slug = toSlug(title)
+  await repo.createInvite({
+    title,
+    slug: toSlug(title),
+    startAt,
+    venue,
+    description,
+    hostName,
+    primaryColor: primaryColor || undefined,
+    accentColor: accentColor || undefined,
+    font: font || undefined,
+    coverImageUrl: coverImageUrl || undefined,
+    guestFields: guestFields.length ? guestFields : undefined,
+    theme: theme || undefined,
+  } as any)
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/invites`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title, slug, startAt, venue, description, hostName, primaryColor, accentColor, font, coverImageUrl, theme, guestFields })
-  })
-  if (!res.ok) throw new Error('Failed to create invite')
+  // Refresh the dashboard list
+  revalidatePath('/dashboard')
 }
 
 function Checkbox({ id, label, defaultChecked=false }: { id: string; label: string; defaultChecked?: boolean }) {
