@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Invite {
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique
+  hostName      String?
+  startAt       DateTime
+  endAt         DateTime?
+  venue         String?
+  description   String?
+
+  // Theming
+  primaryColor  String?   // hex like #111827
+  accentColor   String?   // hex like #F59E0B
+  font          String?   // 'inter' | 'playfair' | 'bebas' | 'system'
+  coverImageUrl String?   // invite hero image
+
+  // RSVP fields config (JSON array of string keys)
+  // e.g. ["name","email","group","phone","dietary","arrivalDate","notes"]
+  guestFields   Json?
+
+  theme         String? // legacy field retained
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  guests        Guest[]
+}
+
+model Guest {
+  id        String   @id @default(cuid())
+  name      String
+  email     String?
+  phone     String?
+  dietary   String?
+  arrivalDate DateTime?
+  group     String?
+  invite    Invite   @relation(fields: [inviteId], references: [id], onDelete: Cascade)
+  inviteId  String
+  rsvps     RSVP[]
+}
+
+model RSVP {
+  id        String   @id @default(cuid())
+  status    String   // going | not_going | maybe
+  notes     String?
+  createdAt DateTime @default(now())
+  guest     Guest    @relation(fields: [guestId], references: [id], onDelete: Cascade)
+  guestId   String
+}

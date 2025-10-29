@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0b0b0f;
+  --fg: #f5f7fb;
+  --primary: #0b0b0f;
+  --accent: #f59e0b;
+  --font-family: var(--font-inter);
+}
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-family), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+}
+a { text-decoration: none; }
+.container { @apply max-w-5xl mx-auto px-4; }
+.card { @apply rounded-lg border border-white/10 bg-white/5 p-5; }
+.btn { @apply inline-flex items-center justify-center rounded-md border border-white/10 px-4 py-2 hover:bg-white/10 transition; }
+.input { @apply w-full rounded-md bg-white/10 border border-white/20 px-3 py-2 outline-none focus:ring-2 focus:ring-white/30; }
+.label { @apply text-sm opacity-80; }
+.h1 { @apply text-3xl font-semibold; }
+.accent { color: var(--accent); }
+.bg-accent { background: var(--accent); }
+.border-accent { border-color: var(--accent); }

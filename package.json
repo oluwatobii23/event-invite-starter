@@ -1,0 +1,31 @@
+{
+  "name": "event-invite-starter",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "prisma generate || true"
+  },
+  "dependencies": {
+    "next": "14.2.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "zod": "3.23.8",
+    "@prisma/client": "5.20.0",
+    "clsx": "2.1.0"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3",
+    "eslint": "9.11.1",
+    "eslint-config-next": "14.2.5",
+    "postcss": "8.4.47",
+    "tailwindcss": "3.4.12",
+    "prisma": "5.20.0",
+    "@types/node": "20.11.30",
+    "@types/react": "18.3.10",
+    "@types/react-dom": "18.3.0"
+  }
+}
