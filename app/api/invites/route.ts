@@ -11,9 +11,8 @@ export async function POST(req: Request) {
   if (!body?.title || !body?.slug || !body?.startAt) {
     return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
   }
+
   const inv = await repo.createInvite({
-    id: '', // will be set in memory repo
-    createdAt: '', updatedAt: '',
     title: String(body.title),
     slug: String(body.slug),
     startAt: String(body.startAt),
@@ -28,5 +27,6 @@ export async function POST(req: Request) {
     guestFields: Array.isArray(body.guestFields) ? body.guestFields.map(String) : undefined,
     theme: body.theme ? String(body.theme) : undefined,
   } as any)
+
   return NextResponse.json({ invite: inv }, { status: 201 })
 }
