@@ -94,10 +94,6 @@ async createInvite(data: any) {
   memory.invites.push(inv as any)
   return inv
 },
-    const inv = { id: cuid(), createdAt: nowISO(), updatedAt: nowISO(), ...data }
-    memory.invites.push(inv as any)
-    return inv
-  },
 
   async getInviteBySlug(slug: string) {
     if (isDbEnabled && prisma) {
