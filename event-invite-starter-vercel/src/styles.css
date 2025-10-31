@@ -1,0 +1,13 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --forest:#0f2f26;
+  --mint:#b1f0da;
+  --gold:#F6CF72;
+}
+html, body, #root { height: 100%; background: #071813; color: #e9fff6; }
+.card { @apply bg-[#0c231c] border border-[rgba(231,214,161,.12)] rounded-2xl p-6 shadow; }
+.link { @apply underline decoration-dotted underline-offset-4; }
